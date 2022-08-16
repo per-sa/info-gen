@@ -15,6 +15,7 @@ sys.path.append("app/utils")
 from ddd import ddd_dict
 from validatecpf import validateGenCpf
 from validatecnpj import generate_cnpj
+from names import male_first_names, female_first_names, last_names
 
 # Create your views here.
 def home(request):
@@ -63,4 +64,21 @@ class cnpjGenerator(views.APIView):
 
         number_data = [{"unformated": func[0], "generated_cnpj": func[1]}]
         serialized = cnpj_serializer(number_data, many=True).data
+        return Response(serialized)
+
+
+class personGenerator(views.APIView):
+    def get(self, request):
+        func = validateGenCpf()
+        rand_name = random.choice(male_first_names)
+        rand_last = random.choice(last_names)
+        number_data = [
+            {
+                "complete_name": f"{rand_name} {rand_last}",
+                "first_name": rand_name,
+                "last_name": rand_last,
+                "cpf": func[1],
+            }
+        ]
+        serialized = person_serializer(number_data, many=True).data
         return Response(serialized)

@@ -15,3 +15,10 @@ class cpf_serializer(serializers.Serializer):
 class cnpj_serializer(serializers.Serializer):
     unformated = serializers.CharField()
     generated_cnpj = serializers.CharField()
+
+
+class person_serializer(serializers.Serializer):
+    complete_name = serializers.CharField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+    cpf = serializers.CharField()
